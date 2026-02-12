@@ -88,14 +88,11 @@ section{
   margin:2rem 0;
 }
 
-.bg svg {
-  position: absolute;
-  bottom:0px; 
-}
+
 
 
 .card-container{
-  width: 80%;
+  width: 0%;
   margin: auto;
   display: grid;
   gap:2.5rem;
@@ -253,7 +250,7 @@ section{
 
 .footer{
   width:100vw;
-  height: 30px;
+  height: 100px;
   color: white;
   background-color: #213547;
   position: fixed;
