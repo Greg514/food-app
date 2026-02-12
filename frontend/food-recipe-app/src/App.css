@@ -88,7 +88,10 @@ section{
   margin:2rem 0;
 }
 
+.pic{
+  border-radius:50%;
 
+}
 
 
 .card-container{
@@ -176,55 +179,62 @@ section{
   z-index: 9;
 }
 
-.form{
-  width: 71%;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.form-header{
-  background-color: #d4f6e8;
-  height: 3px;
-  text-align: center;
-}
-
-.form-control{
+.form {
+  width: 320px;
+  margin: 20px auto;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: space-between;
-  gap:1rem;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.form-control .input{
-  flex-basis: 70%;
-  border:1px solid rgb(156 163 175);
-  border-radius: 4px;
-  height: 30px;
-  padding: 2px;
+.form-title {
+  text-align: center;
+  margin-bottom: 8px;
 }
 
-.form-control .input-textarea{
-  border: 1px solid rgb(156 163 175);
-  border-radius: 4px;
-  flex-basis: 70%;
-  padding: 2px;
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.form button{
-  margin:2rem 0;
-  border:none;
-  background-color: #d4f6e8;
-  font-size: 14px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+.input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.2s ease;
 }
 
-.form p{
+.input:focus {
+  border-color: #ff7a18;
+}
+
+.btn {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  display: inline;
-  border-bottom: 1px solid #307bbd;
-  color:rga(4,136,170);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.form-footer {
+  text-align: center;
   font-size: 14px;
-  color: #307bbd;
+  color: #666;
+  cursor: pointer;
 }
 
 .form .error{
@@ -256,9 +266,13 @@ section{
   position: fixed;
   bottom: 0;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 20px;
   padding-top: 2px;
   font-size: 14px;
+}
+.footer-p{
+ position:relative;
+ top:40px
 }
 
 .outer-container{

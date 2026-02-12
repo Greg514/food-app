@@ -4,7 +4,7 @@ export default function Footer() {
   return (
   
     <div className="footer">
-        <p>@copyright imaginary engineering</p>
+        <p className="footer-p">@copyright developed by Gregory Jean-Louis</p>
     </div>
     
     

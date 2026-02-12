@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <>
-    <NavBar/>
+    <NavBar/><br />
       <RouterProvider router={router} />
       <Footer/>
     

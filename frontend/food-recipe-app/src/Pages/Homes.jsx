@@ -15,7 +15,7 @@ export default function Homes() {
             <button>Share your Recipe</button>
         </div>
         <div className="right">
-            <img src={food}width="600px" height="600px" alt="" />
+            <img  className="pic" src={food}width="600px" height="600px" alt=""/>
         </div>
     </section>
     <div className="bg">
