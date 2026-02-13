@@ -179,7 +179,7 @@ section{
   z-index: 9;
 }
 
-.form {
+.form-container{
   width: 320px;
   margin: 20px auto;
   padding: 24px;
@@ -214,21 +214,28 @@ section{
   border-color: #ff7a18;
 }
 
-.btn {
-  padding: 12px;
+.btn-submit {
+  padding: 12px 24px; /* more horizontal padding for a nicer shape */
   border: none;
   border-radius: 8px;
-  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  background: linear-gradient(135deg, #ff7a18, #ffb347); /* warm gradient */
   color: white;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); /* subtle lift */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
+
+.btn:active {
+  transform: translateY(1px); /* pressed effect */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
 
 .form-footer {
   text-align: center;

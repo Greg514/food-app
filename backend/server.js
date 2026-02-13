@@ -12,11 +12,12 @@ const PORT = process.env.PORT || 3000;
 connectDb();
 
 
-app.use(express.json()); // parse JSON request bodies
-app.use(cors()); // allow requests from frontend
+app.use(express.json()); 
+app.use(cors()); 
 
+app.use("/", require("./routes/user"));
+app.use("/", require("./routes/recipe"));
 
-app.use("/recipe", require("./routes/recipe"));
 
 
 app.get("/", (req, res) => {
