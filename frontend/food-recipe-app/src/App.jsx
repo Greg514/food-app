@@ -1,41 +1,41 @@
+
 import React from "react";
 import "./App.css";
-import Homes from "./Pages/Homes";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Homes from "./pages/Homes";
+import AddFoodRecipe from "./pages/AddFoodRecipe";
 import MainNavigation from "./components/MainNavigation";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
-
-
 
 
 const getAllRecipes = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/recipe");
-    return response.data; 
+    const response = await axios.get("http://localhost:5000/recipe");
+  
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error("Error fetching recipes:", error);
     return []; 
   }
 };
 
-const router = createBrowserRouter([ 
-  
-    {path:"/",element:<MainNavigation/>,children:[
-      {path:"/",element: <Homes />,loader:getAllRecipes
-  }
-    ]}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainNavigation />,
+    children: [
+      {
+        index: true,
+        element: <Homes />,
+        loader: getAllRecipes,
     
+        errorElement: <div style={{ padding: "20px" }}>Failed to load recipes.</div>,
+      },
+      { path: "add-recipe", element: <AddFoodRecipe /> },
+    ],
+  },
 ]);
 
 export default function App() {
-  return (
-    <>
-    <NavBar/><br />
-      <RouterProvider router={router} />
-      <Footer/>
-    
-     </>
-  );
+  return <RouterProvider router={router} />;
 }

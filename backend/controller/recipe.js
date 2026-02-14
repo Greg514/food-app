@@ -1,4 +1,17 @@
 const Recipes = require("../models/recipe");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../public/images')
+  },
+  filename: function (req, file, cb) {
+    const filename = Date.now() + '-' + file.filename
+    cb(null, filename)
+  }
+})
+
+const upload = multer({ storage: storage })
 
 const getRecipes = async (req, res) => {
   try {
@@ -88,4 +101,5 @@ module.exports = {
   addRecipe,
   editRecipe,
   deleteRecipe,
+  upload
 };

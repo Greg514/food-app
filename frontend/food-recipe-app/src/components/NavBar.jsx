@@ -1,35 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import InputForm from "./InputForm";
+import { NavLink } from "react-router-dom";
 
-export default function NavBar() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [isLogin, setIsLogin] = useState(!token);
 
-  const handleLoginClick = () => {
-    setIsOpen(true);
+useEffect(() => {
+  if (token === undefined) return;
+  setTimeout(() => setIsLogin(!token), 0); 
+}, [token]);
+  const checkLogin = () => {
+    if (token) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setToken(null);
+      setUser(null);
+      setIsLogin(true);
+    } else {
+      setIsOpen(true);
+    }
   };
 
   return (
     <>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "1rem",
-          background: "#eee",
-        }}
-      >
-        <h2>Food Recipe App</h2>
-        <ul style={{ display: "flex", gap: "1rem", listStyle: "none" }}>
-          <li>Home</li>
-          <li>My Recipe</li>
-          <li>Favorites</li>
+      <header>
+        <h2>Food Blog</h2>
+        <ul>
           <li>
-            <p
-              style={{ cursor: "pointer", color: "#ff7a18" }}
-              onClick={handleLoginClick}
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={isLogin ? "#" : "/myRecipe"}
+              onClick={(e) => isLogin && (e.preventDefault(), setIsOpen(true))}
             >
-              Login
+              My Recipe
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={isLogin ? "#" : "/favRecipe"}
+              onClick={(e) => isLogin && (e.preventDefault(), setIsOpen(true))}
+            >
+              Favourites
+            </NavLink>
+          </li>
+          <li>
+            <p className="login" onClick={checkLogin}>
+              {isLogin ? "Login" : "Logout"}
+              {user?.email ? ` (${user.email})` : ""}
             </p>
           </li>
         </ul>
@@ -37,7 +60,7 @@ export default function NavBar() {
 
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
-          <InputForm setIsOpen={setIsOpen} />
+          <InputForm setIsOpen={() => setIsOpen(false)} />
         </Modal>
       )}
     </>
