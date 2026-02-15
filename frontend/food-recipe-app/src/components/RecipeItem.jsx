@@ -6,27 +6,23 @@ import {FaHeart} from "react-icons/fa"
 import {TiDelete} from "react-icons/ti"
 import axios from 'axios';
 import {FaEdit} from "react-icons/fa"
-import { NavLink } from 'react-router-dom';
-
-
-const removeItem = async (id)=>{
-  
-try{
-         await axios.delete(
-        `${import.meta.env.VITE_API_URL}/recipe/${id}`
-      
-      );
-    
-    
-    }catch (error) {
-      console.log(error.response?.data?.error || "Something went wrong");
-    }
-
-}
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
 export default function RecipeItem({item}) {
+  const navigate = useNavigate();
+  const removeItem = async (id)=>{
+    try{
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/recipe/${id}`
+      );
+      navigate("/");
+      navigate(0);
+    }catch (error) {
+      console.log(error.response?.data?.error || "Something went wrong");
+    }
+  };
  
 
 
