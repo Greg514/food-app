@@ -13,7 +13,7 @@ const removeItem = async (id)=>{
   
 try{
          await axios.delete(
-        `http://localhost:4000/recipe/${id}`
+        `${import.meta.env.VITE_API_URL}/recipe/${id}`
       
       );
     

@@ -7,7 +7,7 @@ export default function AddFoodRecipe() {
   const onHandleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    await axios.post("http://localhost:4000/recipe", formData, {
+    await axios.post(`${import.meta.env.VITE_API_URL}/recipe`, formData, {
       headers: {
         authorization: "bearer " + localStorage.getItem("token"),
       },
