@@ -2,7 +2,7 @@
 import React from "react";
 import "./App.css";
 import Homes from "./Pages/Homes";
-import AddFoodRecipe from "./pages/AddFoodRecipe";
+import AddFoodRecipe from "./Pages/AddFoodRecipe";
 import MainNavigation from "./components/MainNavigation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
