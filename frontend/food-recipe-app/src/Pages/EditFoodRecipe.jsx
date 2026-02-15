@@ -11,7 +11,7 @@ export default function EditFoodRecipe() {
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
   const loadData = async (id) => {
-    const response = await axios.get(`http://localhost:4000/recipe/${id}`, {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/recipe/${id}`, {
       headers: {
         authorization: "bearer " + localStorage.getItem("token"),
       },
@@ -50,7 +50,7 @@ export default function EditFoodRecipe() {
     }
 
     await axios
-      .put(`http://localhost:4000/recipe/${id}`, formData, {
+      .put(`${import.meta.env.VITE_API_URL}/recipe/${id}`, formData, {
         headers: {
           authorization: "bearer " + localStorage.getItem("token"),
         },
