@@ -16,8 +16,9 @@ const recipeSchema = mongoose.Schema({
     time:{
         type:String,
         require:true,
-    },coverImage:{
-        type:String,
+    },
+    file:{
+        type:Buffer,
 
     }
 },{timestamps:true})

@@ -1,11 +1,12 @@
 
 import React from "react";
 import "./App.css";
-import Homes from "./pages/Homes";
+import Homes from "./Pages/Homes";
 import AddFoodRecipe from "./pages/AddFoodRecipe";
 import MainNavigation from "./components/MainNavigation";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import axios from "axios";
+import EditFoodRecipe from "./Pages/EditFoodRecipe";
 
 
 const getAllRecipes = async () => {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
         errorElement: <div style={{ padding: "20px" }}>Failed to load recipes.</div>,
       },
       { path: "add-recipe", element: <AddFoodRecipe /> },
+       { path: "edit-recipe", element: <EditFoodRecipe /> },
     ],
   },
 ]);

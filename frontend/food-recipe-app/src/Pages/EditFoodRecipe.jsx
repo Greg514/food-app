@@ -1,29 +1,61 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function AddFoodRecipe() {
+export default function EditFoodRecipe() {
+  const [isLoading, setIsLoading] = useState(true);
   const [recipeData, setRecipeData] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const loadData = async (id) => {
+    const response = await axios.get(`http://localhost:4000/recipe/${id}`, {
+      headers: {
+        authorization: "bearer " + localStorage.getItem("token"),
+      },
+    });
+
+    return response;
+  };
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      const editingRecipeData = await loadData(id);
+      setRecipeData(editingRecipeData.data);
+      setIsLoading(false);console.log(recipeData);
+    }
+
+    fetchData();
+  }, []);
+
   const onHandleChange = (e) => {
     let val =
       e.target.name === "ingredients"
         ? e.target.value.split(",")
         : e.target.name === "file"
-          ? e.target.files[0].buffer
+          ? e.target.files[0]
           : e.target.value;
     setRecipeData((pre) => ({ ...pre, [e.target.name]: val }));
   };
   const onHandleSubmit = async (e) => {
     e.preventDefault();
     console.log(recipeData);
-    await axios.post("http://localhost:4000/recipe", recipeData, {
-      headers: {
-        authorization: "bearer " + localStorage.getItem("token"),
-      },
-    });
-    //  .then(() => navigate("/"))
+    console.log(location.pathname);
+
+    await axios
+      .put(`http://localhost:4000/recipe/${id}`, recipeData, {
+        headers: {
+          authorization: "bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then(() => navigate("/"));
   };
+
+  if(isLoading){
+    return <div>Loading....</div>
+  }
   return (
     <>
       <div className="container">
@@ -40,6 +72,7 @@ export default function AddFoodRecipe() {
               className="input"
               name="title"
               onChange={onHandleChange}
+              value={recipeData.title}
             ></input>
           </div>
           <div className="form-control">
@@ -49,6 +82,7 @@ export default function AddFoodRecipe() {
               className="input"
               name="time"
               onChange={onHandleChange}
+                value={recipeData.time}
             ></input>
           </div>
           <div className="form-control">
@@ -59,6 +93,7 @@ export default function AddFoodRecipe() {
               name="ingredients"
               rows="5"
               onChange={onHandleChange}
+                value={recipeData.ingredients}
             ></textarea>
           </div>
           <div className="form-control">
@@ -69,6 +104,7 @@ export default function AddFoodRecipe() {
               name="instructions"
               rows="5"
               onChange={onHandleChange}
+                value={recipeData.instructions}
             ></textarea>
           </div>
           <div className="form-control">
@@ -78,9 +114,10 @@ export default function AddFoodRecipe() {
               className="input"
               name="file"
               onChange={onHandleChange}
+                value={recipeData.file}
             ></input>
           </div>
-          <button type="submit">Add Recipe</button>
+          <button type="submit">Update Recipe</button>
         </form>
       </div>
     </>

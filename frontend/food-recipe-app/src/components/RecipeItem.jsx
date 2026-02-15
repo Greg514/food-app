@@ -1,32 +1,58 @@
 
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
 import foodImg from "../assets/food.jpg";
 import {BsStopwatchFill} from "react-icons/bs";
-import { IoMdHeart } from "react-icons/io";
+import {FaHeart} from "react-icons/fa"
+import {TiDelete} from "react-icons/ti"
+import axios from 'axios';
+import {FaEdit} from "react-icons/fa"
+import { NavLink } from 'react-router-dom';
 
-export default function RecipeItem() {
 
-const allRecipes = useLoaderData()
+const removeItem = async (id)=>{
+  
+try{
+         await axios.delete(
+        `http://localhost:4000/recipe/${id}`
+      
+      );
+    
+    
+    }catch (error) {
+      console.log(error.response?.data?.error || "Something went wrong");
+    }
 
-console.log(allRecipes);
+}
+
+
+
+export default function RecipeItem({item}) {
+ 
+
+
 
   return (
 
 <div className="card-container">
-  {allRecipes?.map((item) => (
+  
     <div key={item._id} className="card">
-      <img src={foodImg} alt={item.title} width="120px" height="100px" />
+      <img src="{foodImg}" alt={item.title} width="120px" height="100px" />
       <div className="card-body">
         <div className="title">{item.title}</div>
         <div className="icons">
           <div className="timer">
-            <BsStopwatchFill />30mins</div>
+            <BsStopwatchFill />{item.time}</div>
           <FaHeart/>
+          <TiDelete onClick={()=>removeItem(item._id)}/>
+            
+              <NavLink
+              to={ `/edit-recipe?id=${item._id}`}
+             ><FaEdit/></NavLink>
+            
         </div>
       </div>
     </div>
-  ))}
+ 
 </div>
 
 

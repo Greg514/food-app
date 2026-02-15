@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function InputForm({ setIsOpen }) {
   const [email, setEmail] = useState("");
@@ -7,21 +8,24 @@ export default function InputForm({ setIsOpen }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
     const endpoint = isSignUp ? "signup" : "login";
 
     try {
-      const response = await axios.post(
-        `http://localhost:4000/${endpoint}`,
-        { email, password }
-      );
-
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
-      setIsOpen();
+      const response = await axios.post(`http://localhost:4000/${endpoint}`, {
+        email,
+        password,
+      });
+      if (response.data) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setIsOpen();
+        navigate(0);
+      }
     } catch (error) {
       setError(error.response?.data?.error || "Something went wrong");
     }
@@ -51,9 +55,7 @@ export default function InputForm({ setIsOpen }) {
         />
       </div>
 
-      <button type="submit">
-        {isSignUp ? "Sign Up" : "Login"}
-      </button>
+      <button type="submit">{isSignUp ? "Sign Up" : "Login"}</button>
 
       {error && <h6 className="error">{error}</h6>}
 

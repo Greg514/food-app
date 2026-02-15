@@ -2,11 +2,16 @@ import React from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import food from "../assets/food.jpg";
 import RecipeItem from "../components/RecipeItem";
+import { useState } from "react";
 
 export default function Homes() {
   const navigate = useNavigate();
-  const recipes = useLoaderData(); // data from loader
-
+  const recipes = useLoaderData(); 
+  const [recipeSearch,setRecipeSearch] =useState("");
+console.log(recipes)
+const recipesFound = recipes.filter((r)=>{
+  return r.title.includes(recipeSearch)});
+  
   return (
     <>
       <section className="home">
@@ -16,7 +21,12 @@ export default function Homes() {
 
           <button onClick={() => navigate("add-recipe")}>
             Share your Recipe
-          </button>
+          </button><br />
+        <input onChange={(e)=>{
+          const value = e.target.value ;
+          
+          setRecipeSearch(value)
+        }} type="text"  name="searchRecipe"/>
         </div>
 
         <div className="right">
@@ -25,12 +35,13 @@ export default function Homes() {
       </section>
 
       <div className="recipe">
-        {recipes.length === 0 ? (
+        {recipesFound.length === 0 ? (
           <p>No recipes found.</p>
         ) : (
-          recipes.map((recipe) => (
-            <RecipeItem key={recipe._id} recipe={recipe} />
+          recipesFound.map((recipe) => (
+            <RecipeItem key={recipe._id} item={recipe} />
           ))
+          
         )}
       </div>
     </>

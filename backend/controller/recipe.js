@@ -38,20 +38,22 @@ const getRecipe = async (req, res) => {
 
 const addRecipe = async (req, res) => {
   try {
-    const { title, ingredients, instructions, time } = req.body;
+    console.log(req);
+    const { title, ingredients, instructions, time, file } = req.body;
 
     
-    if (!title || !ingredients || !instructions) {
+    if (!title || !ingredients || !instructions ||!file ||!time) {
       return res.status(400).json({
         message: "Required fields can't be empty",
       });
     }
-
+ 
     const newRecipe = await Recipes.create({
       title,
       ingredients,
       instructions,
       time,
+      file
     });
 
     return res.status(201).json(newRecipe);
@@ -63,11 +65,11 @@ const addRecipe = async (req, res) => {
 
 const editRecipe = async (req, res) => {
   try {
-    const { title, ingredients, instructions, time } = req.body;
+    const { title, ingredients, instructions, time,file } = req.body;
 
     const updatedRecipe = await Recipes.findByIdAndUpdate(
       req.params.id,
-      { title, ingredients, instructions, time },
+      { title, ingredients, instructions, time,file },
       { new: true }
     );
 

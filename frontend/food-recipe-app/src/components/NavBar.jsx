@@ -33,22 +33,8 @@ useEffect(() => {
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
-          <li>
-            <NavLink
-              to={isLogin ? "#" : "/myRecipe"}
-              onClick={(e) => isLogin && (e.preventDefault(), setIsOpen(true))}
-            >
-              My Recipe
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={isLogin ? "#" : "/favRecipe"}
-              onClick={(e) => isLogin && (e.preventDefault(), setIsOpen(true))}
-            >
-              Favourites
-            </NavLink>
-          </li>
+          
+           
           <li>
             <p className="login" onClick={checkLogin}>
               {isLogin ? "Login" : "Logout"}
