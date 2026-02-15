@@ -10,7 +10,7 @@ import axios from "axios";
 
 const getAllRecipes = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/recipe");
+    const response = await axios.get("http://localhost:4000/recipe");
   
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {

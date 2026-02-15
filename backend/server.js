@@ -11,21 +11,18 @@ const PORT = process.env.PORT || 4000;
 connectDb();
 
 app.use(cors({
-  origin: "http://localhost:4000/add-recipe", 
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: "http://localhost:5173", // change if your frontend runs elsewhere
   credentials: true
 }));
 
 app.use(express.json());
 
-
 app.use("/", require("./routes/user"));
 app.use("/", require("./routes/recipe"));
+app.use("/", require("./routes/login"))
 
-
-app.get("/", (req, res) => {
-  res.send("API is running");
+app.get("/", (request, response) => {
+  response.send("API is running");
 });
 
 app.listen(PORT, () => {
