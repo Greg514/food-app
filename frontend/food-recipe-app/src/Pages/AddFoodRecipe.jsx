@@ -1,28 +1,18 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function AddFoodRecipe() {
-  const [recipeData, setRecipeData] = useState({});
   const navigate = useNavigate();
-  const onHandleChange = (e) => {
-    let val =
-      e.target.name === "ingredients"
-        ? e.target.value.split(",")
-        : e.target.name === "file"
-          ? e.target.files[0].buffer
-          : e.target.value;
-    setRecipeData((pre) => ({ ...pre, [e.target.name]: val }));
-  };
   const onHandleSubmit = async (e) => {
     e.preventDefault();
-    console.log(recipeData);
-    await axios.post("http://localhost:4000/recipe", recipeData, {
+    const formData = new FormData(e.target);
+    await axios.post("http://localhost:4000/recipe", formData, {
       headers: {
         authorization: "bearer " + localStorage.getItem("token"),
       },
     });
-    //  .then(() => navigate("/"))
+    navigate("/");
   };
   return (
     <>
@@ -39,7 +29,6 @@ export default function AddFoodRecipe() {
               type="text"
               className="input"
               name="title"
-              onChange={onHandleChange}
             ></input>
           </div>
           <div className="form-control">
@@ -48,7 +37,6 @@ export default function AddFoodRecipe() {
               type="text"
               className="input"
               name="time"
-              onChange={onHandleChange}
             ></input>
           </div>
           <div className="form-control">
@@ -58,7 +46,6 @@ export default function AddFoodRecipe() {
               className="input-textarea"
               name="ingredients"
               rows="5"
-              onChange={onHandleChange}
             ></textarea>
           </div>
           <div className="form-control">
@@ -68,7 +55,6 @@ export default function AddFoodRecipe() {
               className="input-textarea"
               name="instructions"
               rows="5"
-              onChange={onHandleChange}
             ></textarea>
           </div>
           <div className="form-control">
@@ -77,7 +63,6 @@ export default function AddFoodRecipe() {
               type="file"
               className="input"
               name="file"
-              onChange={onHandleChange}
             ></input>
           </div>
           <button type="submit">Add Recipe</button>

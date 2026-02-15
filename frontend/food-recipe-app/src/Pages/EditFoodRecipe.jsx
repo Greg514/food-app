@@ -34,18 +34,23 @@ export default function EditFoodRecipe() {
     let val =
       e.target.name === "ingredients"
         ? e.target.value.split(",")
-        : e.target.name === "file"
-          ? e.target.files[0]
-          : e.target.value;
+        : e.target.value;
     setRecipeData((pre) => ({ ...pre, [e.target.name]: val }));
   };
   const onHandleSubmit = async (e) => {
     e.preventDefault();
-    console.log(recipeData);
-    console.log(location.pathname);
+    const formData = new FormData();
+    formData.append("title", recipeData.title);
+    formData.append("time", recipeData.time);
+    formData.append("ingredients", recipeData.ingredients);
+    formData.append("instructions", recipeData.instructions);
+    const fileInput = e.target.querySelector('input[name="file"]');
+    if (fileInput.files[0]) {
+      formData.append("file", fileInput.files[0]);
+    }
 
     await axios
-      .put(`http://localhost:4000/recipe/${id}`, recipeData, {
+      .put(`http://localhost:4000/recipe/${id}`, formData, {
         headers: {
           authorization: "bearer " + localStorage.getItem("token"),
         },
@@ -113,8 +118,6 @@ export default function EditFoodRecipe() {
               type="file"
               className="input"
               name="file"
-              onChange={onHandleChange}
-                value={recipeData.file}
             ></input>
           </div>
           <button type="submit">Update Recipe</button>

@@ -36,7 +36,7 @@ export default function RecipeItem({item}) {
 <div className="card-container">
   
     <div key={item._id} className="card">
-      <img src="{foodImg}" alt={item.title} width="120px" height="100px" />
+      <img src={item.file ? `data:image/jpeg;base64,${(() => { const bytes = new Uint8Array(item.file.data); let binary = ""; for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]); return btoa(binary); })()}` : foodImg} alt={item.title} width="120px" height="100px" />
       <div className="card-body">
         <div className="title">{item.title}</div>
         <div className="icons">
