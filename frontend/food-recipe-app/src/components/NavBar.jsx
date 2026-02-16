@@ -28,7 +28,7 @@ useEffect(() => {
   return (
     <>
       <header>
-        <h2>Food Blog</h2>
+        <h2>Food Recipe</h2>
         <ul>
           <li>
             <NavLink to="/">Home</NavLink>
